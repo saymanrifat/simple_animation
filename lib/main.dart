@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
@@ -24,15 +24,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late Animation<double> fadeAnimation;
-  late AnimationController fadeAnimationControler;
+  late Animation<Offset> slideAnimation;
+  late AnimationController slideAnimationController;
 
   @override
   void initState() {
-    fadeAnimationControler =
+    slideAnimationController =
         AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    fadeAnimation =
-        Tween(begin: 0.0, end: 1.0).animate(fadeAnimationControler.view);
+    slideAnimation = Tween(begin: const Offset(-10, 0), end: const Offset(0, 0))
+        .animate(slideAnimationController.view);
     super.initState();
   }
 
@@ -44,8 +44,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FadeTransition(
-              opacity: fadeAnimation,
+            SlideTransition(
+              position: slideAnimation,
               child: Container(
                 height: 200,
                 width: 200,
@@ -54,14 +54,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             ElevatedButton(
                 onPressed: () {
-                  fadeAnimationControler.forward();
+                  slideAnimationController.forward();
                 },
-                child: Text("Show")),
+                child: const Text("Show")),
             ElevatedButton(
                 onPressed: () {
-                  fadeAnimationControler.reverse();
+                  slideAnimationController.reverse();
                 },
-                child: Text("Hide")),
+                child: const Text("Hide")),
           ],
         ),
       )),
